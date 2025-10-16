@@ -4,6 +4,11 @@
     <a class="text-white font-bold text-xl mx-auto hover:underline" href="#">Traccomend</a>
   </nav>
   
+  <!-- hotel-search (temporary test insertion) -->
+  <div class="mt-4 mx-auto max-w-xl">
+    <app-hotel-searcher></app-hotel-searcher>
+  </div>
+  
   <!-- searchbar -->
   <div *ngIf="!showResult">
     <app-search (searchCompleted)="handleSearchCompleted()"></app-search>
