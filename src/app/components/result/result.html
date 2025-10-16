@@ -1,1 +1,18 @@
-<p>result works!</p>
+<div class="result-container">
+  <h2 class="text-xl font-bold mb-4">Önerilen Şehirler</h2>
+
+  <div *ngIf="recommendations?.length; else noResults">
+    <ul class="space-y-4">
+      <li *ngFor="let city of recommendations" class="p-4 border rounded shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-semibold text-indigo-700">{{ city.name }} ({{ city.iataCode }})</h3>
+        <p class="text-sm text-gray-600">
+          Koordinatlar: {{ city.geoCode.latitude }}, {{ city.geoCode.longitude }}
+        </p>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noResults>
+    <p class="text-gray-500">Henüz önerilen bir şehir bulunamadı.</p>
+  </ng-template>
+</div>

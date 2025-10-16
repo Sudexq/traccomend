@@ -1,18 +1,21 @@
 import { Component, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { GeocoderAutocomplete } from '@geoapify/geocoder-autocomplete';
 import { FormsModule } from '@angular/forms';
+import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
+
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, GeoapifyGeocoderAutocompleteModule],
   templateUrl: './search.html',
   styleUrl: './search.css'
 })
 export class Search implements AfterViewInit {
   @Output() searchCompleted = new EventEmitter<void>();
 
-  selectedLocation: { lat: number, lon: number, name: string } | null = null;
+  selectedCity: { name: string } | null = null;
+  selectedCountry: { name: string } | null = null;
   duration: number = 0;
   budget: number = 0;
   myAPIKey: string = "d0ae250233094b6facea17e9f0bf5483";
@@ -29,10 +32,38 @@ export class Search implements AfterViewInit {
           limit: 5,
           skipDetails: true,
           skipIcons: true,
-          placeholder: " " // sadece 5 öneri göster
+          placeholder: "Lütfen bir şehir yazınız"
         }
       );
 
+      autocomplete.on("select", (location) => {
+        if (!location || !location.properties) {
+          console.warn("Geçersiz konum seçildi.");
+          return;
+        }
+
+        const props = location.properties;
+        console.log(location.properties)
+        this.selectedCity = {
+          name: props.city,
+        };
+      });
+    }
+
+    const elementCountry = document.getElementById("autocompleteCountry");
+    if (elementCountry) {
+      const autocomplete = new GeocoderAutocomplete(
+        elementCountry,
+        this.myAPIKey,
+        {
+          type: "country",
+          lang: "en",
+          limit: 5,
+          skipDetails: true,
+          skipIcons: true,
+          placeholder: "Lütfen bir ülke yazınız"
+        }
+      );
       autocomplete.on("select", (location) => {
 
         if (!location || !location.properties) {
@@ -40,33 +71,32 @@ export class Search implements AfterViewInit {
           return;
         }
 
-        const selectedPlace = location.properties;
-        console.log("Seçilen yer:", selectedPlace.city);
-        console.log("Koordinatlar:", selectedPlace.lat, selectedPlace.lon);
-
         const props = location.properties;
         console.log(location.properties)
-        this.selectedLocation = {
-          lat: props.lat,
-          lon: props.lon,
-          name: props.city,
+        this.selectedCountry = {
+          name: props.country_code,
         };
       });
     }
-
-    
   }
+
 
   onSubmit(event: Event) {
     event.preventDefault();
 
-    if (!this.selectedLocation) {
+    if (!this.selectedCity) {
       alert("Lütfen bir konum seçin.");
       return;
     }
 
+    if (!this.selectedCountry) {
+      alert("Lütfen nereli olduğunuzu seçin.");
+      return;
+    }
+
     const payload = {
-      location: this.selectedLocation,
+      location: this.selectedCity,
+      travellerCountry: this.selectedCountry,
       duration: this.duration,
       budget: this.budget
     };
