@@ -1,5 +1,5 @@
 /* Autocomplete container */
-#autocomplete {
+.autocomplete {
   position: relative;
   display: flex;
   align-items: center;

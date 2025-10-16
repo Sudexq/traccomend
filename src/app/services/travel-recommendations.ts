@@ -14,8 +14,13 @@ export class TravelRecommendations {
   getRecommendations(origin: string): Observable<any> {
     return this.authService.getAccessToken().pipe(
       switchMap(token => {
+        console.log('Access Token:', token);
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        const params = new HttpParams().set('origin', origin);
+        // const params = new HttpParams().set('origin', origin);
+        const params = new HttpParams()
+          .set('cityCodes', origin)
+        // .set('travelerCountryCode', 'FR'); // Örnek ülke kodu
+
         return this.http.get(this.apiUrl, { headers, params });
       })
     );

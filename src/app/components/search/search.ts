@@ -15,20 +15,23 @@ export class Search implements AfterViewInit {
   selectedLocation: { lat: number, lon: number, name: string } | null = null;
   duration: number = 0;
   budget: number = 0;
+  myAPIKey: string = "d0ae250233094b6facea17e9f0bf5483";
 
   ngAfterViewInit(): void {
     const element = document.getElementById("autocomplete");
     if (element) {
       const autocomplete = new GeocoderAutocomplete(
         element,
-        "d0ae250233094b6facea17e9f0bf5483",
+        this.myAPIKey,
         {
           type: "city",
           lang: "en",
-          limit: 5 // sadece 5 öneri göster
+          limit: 5,
+          skipDetails: true,
+          skipIcons: true,
+          placeholder: " " // sadece 5 öneri göster
         }
       );
-
 
       autocomplete.on("select", (location) => {
 
@@ -50,6 +53,8 @@ export class Search implements AfterViewInit {
         };
       });
     }
+
+    
   }
 
   onSubmit(event: Event) {

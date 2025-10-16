@@ -9,14 +9,17 @@ import { TravelRecommendations } from '../../services/travel-recommendations';
   styleUrl: './result.css'
 })
 export class Result implements OnInit {
+  constructor(private travelService: TravelRecommendations) { }
   ngOnInit(): void {
     const storedData = localStorage.getItem("travelSearchData");
     console.log(storedData)
+    this.travelService.getRecommendations('MIL').subscribe(response => {
+      console.log(response.data); // Burada veri geliyor mu?
+    });
 
   }
-  recommendations: string[] = [];
 
-  constructor(private travelService: TravelRecommendations) { }
+  recommendations: string[] = [];
 
   fetchRecommendations() {
     const storedData = localStorage.getItem("travelSearchData");
