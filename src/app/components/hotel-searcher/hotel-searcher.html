@@ -1,0 +1,12 @@
+<div *ngFor="let h of hotels; let i = index" class="p-2 border mb-2">
+    <h3>{{ i + 1 }}. {{ h.name }}</h3>
+    <p><strong>Hotel ID:</strong> {{ h.hotelId }}</p>
+    <p><strong>Dupe ID:</strong> {{ h.dupeId }}</p>
+    <p><strong>Chain Code:</strong> {{ h.chainCode }}</p>
+    <p><strong>City Code:</strong> {{ h.cityCode }}</p>
+    <p><strong>Type:</strong> {{ h.type }}</p>
+    <p><strong>Latitude:</strong> {{ h.latitude }}</p>
+    <p><strong>Longitude:</strong> {{ h.longitude }}</p>
+
+
+  </div>

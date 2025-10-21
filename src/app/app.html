@@ -1,14 +1,23 @@
 <div>
-  <!-- navbar -->
-  <nav class="bg-sky-500 h-18 p-5 mx-auto block">
-    <a class="text-white font-bold text-xl mx-auto hover:underline" href="#">Traccomend</a>
+  <!-- navbar with material tabs -->
+  <nav class="bg-sky-500 h-18 p-5">
+    <div class="mx-auto max-w-6xl flex items-center justify-between">
+      <a class="text-white font-bold text-xl hover:underline" href="">Traccomend</a>
+
+      <div class="flex-1 flex justify-center">
+        <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)" class="bg-white rounded">
+          <mat-tab *ngFor="let t of tabs" [label]="t.label"></mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <div class="w-6"></div>
+    </div>
   </nav>
-  
-  <!-- hotel-search (temporary test insertion) -->
+
+  <!-- route render area -->
   <div class="mt-4 mx-auto max-w-xl">
-    <app-hotel-searcher></app-hotel-searcher>
   </div>
-  
+
   <!-- searchbar -->
   <div *ngIf="!showResult">
     <app-search (searchCompleted)="handleSearchCompleted()"></app-search>
@@ -21,6 +30,4 @@
       Back to search
     </button>
   </div>
-
-  <!-- footer -->
 </div>

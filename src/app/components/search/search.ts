@@ -32,13 +32,13 @@ export class Search implements AfterViewInit {
           limit: 5,
           skipDetails: true,
           skipIcons: true,
-          placeholder: "Lütfen bir şehir yazınız"
+          placeholder: "Please type a city"
         }
       );
 
       autocomplete.on("select", (location) => {
         if (!location || !location.properties) {
-          console.warn("Geçersiz konum seçildi.");
+          console.warn("Invalid location selected.");
           return;
         }
 
@@ -61,13 +61,13 @@ export class Search implements AfterViewInit {
           limit: 5,
           skipDetails: true,
           skipIcons: true,
-          placeholder: "Lütfen bir ülke yazınız"
+          placeholder: "Please type a country"
         }
       );
       autocomplete.on("select", (location) => {
 
         if (!location || !location.properties) {
-          console.warn("Geçersiz konum seçildi.");
+          console.warn("Invalid location selected.");
           return;
         }
 
@@ -85,12 +85,12 @@ export class Search implements AfterViewInit {
     event.preventDefault();
 
     if (!this.selectedCity) {
-      alert("Lütfen bir konum seçin.");
+      alert("Please select a location.");
       return;
     }
 
     if (!this.selectedCountry) {
-      alert("Lütfen nereli olduğunuzu seçin.");
+      alert("Please select your country.");
       return;
     }
 
@@ -101,7 +101,7 @@ export class Search implements AfterViewInit {
       budget: this.budget
     };
 
-    console.log("API'ye gönderilecek veri:", payload);
+    console.log("Data to be sent to API:", payload);
     localStorage.setItem('travelSearchData', JSON.stringify(payload));
     this.searchCompleted.emit(); // Ana component'e bildir
   }
